@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<div th:text=${a}>서버에서 값 받기</div>
+<!-- *{...} -->
+<div th:object="${session}">
+  <p>Name: <span th:text="${session.firstName}"></span>.</p>
+  <p>Name: <span th:text="*{firstName}"></span>.</p>
+  <p>Surname: <span th:text="*{lastName}"></span>.</p>
+</div>
+<!-- #{..} message expression -->
+<!-- 반복문 -->
+<table>
+  <tr>
+    <th>NAME</th>
+    <th>PRICE</th>
+    <th>IN STOCK</th>
+  </tr>
+  <tr th:each="prod,iterStat : ${prods}" th:class="${iterStat.odd}? 'odd'">
+    <td th:text="${prod.name}">Onions</td>
+    <td th:text="${prod.price}">2.41</td>
+    <td th:text="${prod.inStock}? #{true} : #{false}">yes</td>
+  </tr>
+</table>
+<!-- 조건문 -->
+<table>
+    <tr>
+        <th>NAME</th>
+        <th>PRICE</th>
+        <th>IN STOCK</th>
+    </tr>
+    <tr th:if="${#lists.size(prods)} > 0" th:each="prod,iterStat : ${prods}">
+        <td th:text="${prod.name}">Onions</td>
+        <td th:text="${prod.price}">2.41</td>
+        <td th:text="${prod.inStock}">yes</td>
+    </tr>
+    <tr th:unless="${#lists.size(prods)} > 0">
+        <td colspan="3">No Data.</td>
+    </tr>
+</table>
+</body>
+</html>
